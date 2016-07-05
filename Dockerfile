@@ -6,4 +6,4 @@ EXPOSE 5000
 
 WORKDIR /var/www/frontend/
 
-CMD ["npm", "run", "prod"]
+CMD ["npm", "run", "start:prod"]
