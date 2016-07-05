@@ -1,0 +1,10 @@
+@keyframes namedcolors {
+    100% {
+        background-color:#ffe108;
+        /*box-shadow: 0 0 20px #ffe108;*/
+    }
+}
+.gold {
+    background-color: #ff9800;
+    animation: namedcolors .2s infinite alternate;
+}

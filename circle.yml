@@ -1,0 +1,22 @@
+machine:
+  services:
+      - docker
+  node:
+    version: 6.2.2
+
+test:
+  override:
+    # no tests yet
+    - echo 1
+
+dependencies:
+  override:
+    - npm install
+    - npm run build
+    - sh ./build.sh
+
+deployment:
+  production:
+    branch: stable
+    commands:
+      - sh ./deploy_prod.sh
