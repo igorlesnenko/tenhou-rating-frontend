@@ -13,6 +13,9 @@ export default class Header extends Component {
             <ul className="nav navbar-nav">
               <li><Link to="/about">О рейтинге</Link></li>
             </ul>
+            <ul className="nav navbar-nav">
+              <li><a href="http://tenhou.net/0/?L7994" target="_blank">Лобби (7994)</a></li>
+            </ul>
           </div>
         </div>
       </div>
