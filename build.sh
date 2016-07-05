@@ -1,1 +1,1 @@
-docker build -t $DOCKER_ID_USER/tenhou:api .
+docker build -t $DOCKER_ID_USER/tenhou:frontend .
