@@ -11,7 +11,6 @@ export const GAMES_SUCCESS = 'GAMES_SUCCESS';
 export const GAMES_FAILURE  = 'GAMES_FAILURE';
 
 function fetchPlayers(params) {
-  console.log('fetchPlayers');
   return {
     [CALL_API]: {
       types: [ PLAYERS_REQUEST, PLAYERS_SUCCESS, PLAYERS_FAILURE ],

@@ -4,6 +4,7 @@ import App from '../App';
 import GameRow from '../../components/GameRow';
 import RatingRow from '../../components/RatingRow';
 import RatingTableHeader from '../../components/RatingTableHeader';
+import RatingChart from '../../components/RatingChart';
 import Helmet from 'react-helmet';
 import { toGlobalId } from 'graphql-relay';
 import { loadGames } from '../../actions'
@@ -25,12 +26,37 @@ class Games extends Component {
   render() {
     const { items, player } = this.props;
 
+    let chartOptions = {
+      responsive: true,
+      animate: false,
+      scales: {
+        xAxes: [{
+          display: false
+        }]
+      }
+    };
+
+    let labels = player.chartData ? player.chartData.map(d => '') : [];
+    let chartData = {
+      labels: labels,
+      datasets: [{
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: player.chartData
+      }]
+    };
+
     return(
       <div>
         <Helmet title="Player statistics / Tenhou"/>
         <h1>
           { player.name } ({ player.rating })
         </h1>
+        { player.chartData && player.chartData.length ? <RatingChart chartData={chartData} chartOptions={chartOptions} /> : "" }
         <table className="table">
           <thead>
           <tr>
@@ -71,6 +97,9 @@ function mapStateToProps(state, ownProps) {
 
     player.fullRatingHistory = history.reverse();
     player.ratingHistory.reverse();
+
+    player.chartData = Array.prototype.slice.call(player.fullRatingHistory);
+    player.chartData.reverse();
   }
 
   let games = [];
