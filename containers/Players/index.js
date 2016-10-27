@@ -4,6 +4,7 @@ import App from '../App';
 import RatingRow from '../../components/RatingRow';
 import RatingTableHeader from '../../components/RatingTableHeader';
 import Helmet from 'react-helmet';
+import moment from 'moment';
 
 import { loadPlayers } from '../../actions'
 
@@ -22,7 +23,7 @@ class Players extends Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, isEmpty, isFetching } = this.props;
 
     return(
       <div className="container">
@@ -32,7 +33,14 @@ class Players extends Component {
             <table className="table table-bordered">
               <RatingTableHeader />
               <tbody>
-              { (items && items.length) ? items.map((item, index) => <RatingRow key={item.id} index={index} item={item}></RatingRow>) : <tr><td></td></tr> }
+              {
+                isFetching
+                  ? <tr><td>Loading...</td></tr>
+                  : (isEmpty
+                      ? <tr><td></td></tr>
+                      : items.map((item, index) => <RatingRow key={item.id} index={index} item={item}></RatingRow>)
+                    )
+              }
               </tbody>
             </table>
           </div>
@@ -43,9 +51,21 @@ class Players extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {
-    items: Object.values(state.entities.players)
+  let props = {
+    items: Object.values(state.entities.players),
+    isFetching: state.entities.isFetching
   };
+
+  props.isEmpty = !(props.items && props.items.length);
+
+  // Hide players with last game more than 30 days ago
+  if (!props.isEmpty) {
+    props.items = props.items.filter(function(item) {
+      return -moment(item.lastGame).diff(moment(), 'days') < 30
+    })
+  }
+
+  return props;
 }
 
 export default connect(

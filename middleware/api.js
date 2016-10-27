@@ -23,13 +23,12 @@ const gamesSchema = {
   data: {
     node: playerSchema
   }
-}
+};
 
 export const Schemas = {
   Players: playersSchema,
   Games: gamesSchema
-}
-
+};
 
 function callApi(query, schema) {
   const fullUrl = endpoint + '?query=' + query;
