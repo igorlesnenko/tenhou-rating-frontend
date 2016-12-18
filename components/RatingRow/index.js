@@ -14,7 +14,7 @@ export default class RatingRow extends Component {
         <td className={index == 0 ? styles.gold: ''}>
           <Link to={'/player/' + fromGlobalId(item.id).id}>{item.name}</Link>
         </td>
-        <td>{item.rating}</td>
+        <td>{Math.round(item.rating)}</td>
         <td>{item.gamesCount}</td>
         <td>{item.avgRank}</td>
         <td>{item.totalPoints > 0 ? '+': ''}{item.totalPoints}</td>
