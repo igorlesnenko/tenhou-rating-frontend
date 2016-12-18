@@ -54,7 +54,7 @@ class Games extends Component {
       <div>
         <Helmet title="Player statistics / Tenhou"/>
         <h1>
-          { player.name } ({ player.rating })
+          { player.name } ({ Math.round(player.rating) })
         </h1>
         { player.chartData && player.chartData.length ? <RatingChart chartData={chartData} chartOptions={chartOptions} /> : "" }
         <table className="table">
