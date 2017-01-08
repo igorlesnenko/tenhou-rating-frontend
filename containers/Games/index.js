@@ -78,8 +78,7 @@ class Games extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const player = state.entities.players[toGlobalId('Player', ownProps.params.id)];
-
+  const player = state.entities.players[toGlobalId('player', ownProps.params.id)];
   if (!player) {
     return {
       items: [],
@@ -103,8 +102,8 @@ function mapStateToProps(state, ownProps) {
   }
 
   let games = [];
-  if (player.games) {
-    games = player.games.map(id => state.entities.games[id])
+  if (player.games && player.games.edges) {
+    games = player.games.edges.map(item => state.entities.games[item.node])
   }
 
   return {

@@ -12,11 +12,21 @@ const playerSchema = new Schema('players', {
   idAttribute: item => item.id
 });
 playerSchema.define({
-  games: arrayOf(gameSchema)
+  games: {
+    edges: arrayOf({
+      node: gameSchema
+    })
+  }
 });
 const playersSchema = {
   data: {
-    players: arrayOf(playerSchema)
+    viewer: {
+      allPlayers: {
+        edges: arrayOf({
+          node: playerSchema
+        })
+      }
+    }
   }
 };
 const gamesSchema = {

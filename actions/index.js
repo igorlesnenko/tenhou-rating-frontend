@@ -16,8 +16,15 @@ function fetchPlayers(params) {
       types: [ PLAYERS_REQUEST, PLAYERS_SUCCESS, PLAYERS_FAILURE ],
       schema: Schemas.Players,
       query: `{
-        players(sort: "rating", order: -1) {
-          id name rating gamesCount avgRank totalPoints firstRate secondRate thirdRate fourthRate lastGame
+        viewer {
+          allPlayers(filter: { order: "rating DESC" }) {
+            edges {
+              node {
+                id name rating gamesCount avgRank totalPoints 
+                firstRate secondRate thirdRate fourthRate lastGame 
+              }  
+            }
+          }
         }
       }`
     }
@@ -29,20 +36,25 @@ function fetchGames(params) {
     [CALL_API]: {
       types: [ GAMES_REQUEST, GAMES_SUCCESS, GAMES_FAILURE ],
       schema: Schemas.Games,
-      query: `{
-        node(id: "${toGlobalId('Player', params.id)}") {
-          ...on player {
-            id name
-            rating gamesCount
-            avgRank totalPoints
-            firstRate secondRate thirdRate fourthRate
-            lastGame
-            ratingHistory
-            games {
-              id date first second third fourth
+      query: `{      
+        node(id: "${toGlobalId('player', params.id)}") {        
+          ...on player {           
+            id name          
+            rating gamesCount          
+            avgRank totalPoints         
+            firstRate secondRate thirdRate fourthRate       
+            lastGame            
+            ratingHistory     
+            
+            games {              
+              edges {
+                node {
+                  id date first second third fourth 
+                }
+              }           
             }
-          }
-        }
+          }       
+        }     
       }`
     }
   }
