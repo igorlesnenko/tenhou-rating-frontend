@@ -46,7 +46,7 @@ function fetchGames(params) {
             lastGame            
             ratingHistory     
             
-            games {              
+            games(filter: {order: "date DESC" }) {              
               edges {
                 node {
                   id date first second third fourth 
